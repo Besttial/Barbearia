@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Barbearia - Agendamentos</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f5f5f5;
+    }
+    .whatsapp-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #25D366;
+      color: white;
+      border-radius: 50%;
+      padding: 15px;
+      font-size: 24px;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+  <div class="container py-4">
+    <h1 class="text-center mb-4">Agende seu Corte</h1>
+
+    <form id="formAgendamento" class="row g-3">
+      <div class="col-md-6">
+        <label for="nomeCliente" class="form-label">Seu Nome</label>
+        <input type="text" class="form-control" id="nomeCliente" required>
+      </div>
+      <div class="col-md-6">
+        <label for="barbeiro" class="form-label">Escolha o Barbeiro</label>
+        <select class="form-select" id="barbeiro" required>
+          <option selected disabled value="">Selecione...</option>
+          <option>Lucas</option>
+          <option>Matheus</option>
+          <option>João</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label for="data" class="form-label">Data</label>
+        <input type="date" class="form-control" id="data" required>
+      </div>
+      <div class="col-md-4">
+        <label for="horario" class="form-label">Horário</label>
+        <input type="time" class="form-control" id="horario" required>
+      </div>
+      <div class="col-md-4">
+        <label for="tipoCorte" class="form-label">Tipo de Corte</label>
+        <select class="form-select" id="tipoCorte" required>
+          <option selected disabled value="">Escolha...</option>
+          <option>Corte Tradicional</option>
+          <option>Fade</option>
+          <option>Barba</option>
+          <option>Corte + Barba</option>
+        </select>
+      </div>
+      <div class="col-12">
+        <button type="submit" class="btn btn-primary">Agendar</button>
+      </div>
+    </form>
+
+    <hr class="my-5">
+
+    <h2 class="mb-3">Agendamentos Recentes</h2>
+    <div id="listaAgendamentos">
+      <p>Nenhum agendamento por enquanto.</p>
+    </div>
+
+    <hr class="my-5">
+
+    <a href="login.html" class="btn btn-secondary">Acessar Painel Administrativo</a>
+  </div>
+
+  <!-- Botão do WhatsApp -->
+  <a href="https://wa.me/5599999999999" class="whatsapp-button" target="_blank" title="Fale conosco no WhatsApp">
+    <i class="bi bi-whatsapp"></i>📱
+  </a>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Script básico para mostrar agendamentos -->
+  <script>
+    const form = document.getElementById('formAgendamento');
+    const lista = document.getElementById('listaAgendamentos');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const nome = document.getElementById('nomeCliente').value;
+      const barbeiro = document.getElementById('barbeiro').value;
+      const data = document.getElementById('data').value;
+      const horario = document.getElementById('horario').value;
+      const corte = document.getElementById('tipoCorte').value;
+
+      const novoAgendamento = document.createElement('div');
+      novoAgendamento.className = 'card my-2 p-3';
+      novoAgendamento.innerHTML = `<strong>${nome}</strong> agendou com <strong>${barbeiro}</strong> em <strong>${data}</strong> às <strong>${horario}</strong> para <strong>${corte}</strong>.`;
+
+      lista.prepend(novoAgendamento);
+
+      form.reset();
+    });
+  </script>
+</body>
+</html>

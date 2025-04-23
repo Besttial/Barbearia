@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Painel Administrativo - Agendamentos</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .table-container {
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+  <script>
+    if (localStorage.getItem("logado") !== "true") {
+      window.location.href = "login.html";
+    }
+  </script>
+  
+  <div class="container py-5">
+    <h1 class="mb-4 text-center">Painel Administrativo</h1>
+
+    <div class="mb-3">
+      <a href="index.html" class="btn btn-secondary">← Voltar ao Agendamento</a>
+    </div>
+
+    <div class="table-container">
+      <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+          <tr>
+            <th>Cliente</th>
+            <th>Barbeiro</th>
+            <th>Data</th>
+            <th>Horário</th>
+            <th>Tipo de Corte</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="tabelaAgendamentos">
+          <!-- Agendamentos serão inseridos aqui -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Script para simular dados e excluir -->
+  <script>
+    // Simulação de agendamentos (poderia vir do backend ou localStorage)
+    let agendamentos = [
+      { nome: "João", barbeiro: "Lucas", data: "2025-04-25", horario: "14:00", corte: "Fade" },
+      { nome: "Carlos", barbeiro: "Matheus", data: "2025-04-26", horario: "16:30", corte: "Corte Tradicional" },
+    ];
+
+    const tabela = document.getElementById('tabelaAgendamentos');
+
+    function carregarAgendamentos() {
+      tabela.innerHTML = "";
+      agendamentos.forEach((a, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${a.nome}</td>
+          <td>${a.barbeiro}</td>
+          <td>${a.data}</td>
+          <td>${a.horario}</td>
+          <td>${a.corte}</td>
+          <td>
+            <button class="btn btn-sm btn-danger" onclick="excluirAgendamento(${index})">Excluir</button>
+          </td>
+        `;
+        tabela.appendChild(row);
+      });
+
+      if (agendamentos.length === 0) {
+        tabela.innerHTML = `<tr><td colspan="6" class="text-center">Nenhum agendamento encontrado.</td></tr>`;
+      }
+    }
+
+    function excluirAgendamento(index) {
+      if (confirm("Deseja realmente excluir este agendamento?")) {
+        agendamentos.splice(index, 1);
+        carregarAgendamentos();
+      }
+    }
+
+    carregarAgendamentos();
+  </script>
+
+<button class="btn btn-outline-danger" onclick="logout()">Sair</button>
+
+<script>
+  function logout() {
+    localStorage.removeItem("logado");
+    window.location.href = "login.html";
+  }
+</script>
+
+</body>
+</html>
